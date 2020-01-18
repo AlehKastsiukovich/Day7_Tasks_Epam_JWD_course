@@ -9,8 +9,8 @@ import by.javatr.task1.service.exception.ServiceException;
 
 
 public class IntegerCustomArrayService {
-	public static IntegerCustomArrayService instance;
-	
+	private static IntegerCustomArrayService instance;
+ 	
 	private IntegerCustomArrayService() {
 	}
 	

@@ -23,7 +23,11 @@ public class Runner {
 		
 		IntegerCustomArray custArr2 = new IntegerCustomArray();
 		
-		ArrayInitializer.initByConsole(custArr2.getElements());
+		try {
+			ArrayInitializer.initByConsole(custArr2.getElements());
+		} catch (NullEntryParametrException e1) {
+			e1.printStackTrace();
+		}
 
 		IntegerCustomArrayService is = IntegerCustomArrayService.getIntegerCustomArrayService();
 	

@@ -7,37 +7,34 @@ import by.javatr.task1.entity.exception.NullEntryParametrException;
 import by.javatr.task1.entity.validator.Validator;
 
 
-public class IntegerCustomArray implements AbstractArray<Integer> {
-	
+public class IntegerCustomArray {
 	private final static int DEFAULT_CAPACITY = 10;
 	private final int[] elements;
 	private final int length;
 
-	
 	public IntegerCustomArray() {
 		length = DEFAULT_CAPACITY;
 		elements = new int[DEFAULT_CAPACITY];
 	}
-	
+
 	public IntegerCustomArray(int length) throws IllegalArrayLengthException {
 		if (!Validator.isValidLength(length)) {
 			throw new IllegalArrayLengthException("Array length must be > 0!");
 		}
-		
+
 		this.length = length;
 		elements = new int[length];
 	}
-	
+
 	public IntegerCustomArray(int[] elements) throws NullEntryParametrException {
 		if (elements == null) {
 			throw new NullEntryParametrException("Entry parametr must be intialized!");
 		}
-		
+
 		length = elements.length;
 		this.elements = elements;
 	}
-	
-	
+
 	public int[] getElements() {
 		return elements;
 	}
@@ -46,68 +43,54 @@ public class IntegerCustomArray implements AbstractArray<Integer> {
 		return length;
 	}
 
-	@Override
-	public Integer get(int index) throws IndexOutOfRangeException {
+	public int get(int index) throws IndexOutOfRangeException {
 		if (!Validator.isValidIndexRange(index, length)) {
 			throw new IndexOutOfRangeException("Index out of arrays length!");
 		}
-		
+
 		return elements[index];
 	}
 
-	@Override
+	public boolean setElement(int index, int value) throws IndexOutOfRangeException {
+		if (!Validator.isValidIndexRange(index, length)) {
+			throw new IndexOutOfRangeException("Index out of arrays length!");
+		}
+
+		elements[index] = value;
+
+		return true;
+	}
+
 	public boolean isEmpty() {
 		return length == 0;
 	}
 
-	@Override
-	public boolean setElement(int index, Integer e) throws IndexOutOfRangeException, NullEntryParametrException{
-		if (!Validator.isValidIndexRange(index, length)) {
-			throw new IndexOutOfRangeException("Index out of arrays length!");
-		}
-		
-		if (e == null) {
+	public boolean addAll(int[] array) throws NullEntryParametrException, IllegalArrayLengthException {
+		if (array == null) {
 			throw new NullEntryParametrException("Entry parametr must be intialized!");
 		}
-		
-		elements[index] = e;
-		
-		return true;
-	}
 
-	@Override
-	public boolean addAll(Integer[] e) throws NullEntryParametrException, IllegalArrayLengthException{
-		if (e == null) {
-			throw new NullEntryParametrException("Entry parametr must be intialized!");
-		}
-		
-		if (this.length != e.length) {
+		if (this.length != array.length) {
 			throw new IllegalArrayLengthException("Entry array length must be same with our array length!");
 		}
-		
+
 		for (int i = 0; i < elements.length; i++) {
-			elements[i] = e[i];
+			elements[i] = array[i];
 		}
-		
-		
+
 		return false;
 	}
-	
-	@Override
-	public boolean contains(Integer e) throws NullEntryParametrException {
-		if (e == null) {
-			throw new NullEntryParametrException("Entry parametr must be intialized!");
-		}
-		
+
+	public boolean contains(int value) {
 		for (Integer val : elements) {
-			if (val.equals(e)) {
+			if (val.equals(value)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public void bubbleSort() {
 		boolean isSorted = false;
 		int temp;
@@ -180,7 +163,6 @@ public class IntegerCustomArray implements AbstractArray<Integer> {
 		}
 	}
 
-	
 	@Override
 	public int hashCode() {
 		int hash = 7;
@@ -189,10 +171,10 @@ public class IntegerCustomArray implements AbstractArray<Integer> {
 
 		return hash;
 	}
-	 
+
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) 
+		if (this == o)
 			return true;
 		if (o == null)
 			return false;
@@ -205,42 +187,41 @@ public class IntegerCustomArray implements AbstractArray<Integer> {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
-		if (elements == null) 
+		if (elements == null)
 			return null;
 		if (length == 0)
 			return "[]";
-		
+
 		StringBuilder sb = new StringBuilder();
 		int maxIndex = length - 1;
 		sb.append("[");
-		
+
 		for (int i = 0; i < length; i++) {
 			sb.append(elements[i]);
-			
+
 			if (i == maxIndex) {
 				sb.append("]");
 				continue;
 			}
-			
+
 			sb.append(", ");
 		}
-		
-		
+
 		return sb.toString();
 	}
-	
+
 	private int elementsHashCode(int[] array) {
 		if (array == null)
-            return 0;
+			return 0;
 
-        int result = 1;
-        for (int element : array)
-            result = 31 * result + element;
+		int result = 1;
+		for (int element : array)
+			result = 31 * result + element;
 
-        return result;
+		return result;
 	}
 
 	private boolean intArraysEquals(int[] arr1, int[] arr2) {
@@ -254,14 +235,14 @@ public class IntegerCustomArray implements AbstractArray<Integer> {
 			return false;
 		return true;
 	}
-	
+
 	private boolean isSameElements(int[] arr1, int[] arr2) {
 		for (int i = 0; i < arr1.length; i++) {
-			if(arr1[i] != arr2[i]) {
+			if (arr1[i] != arr2[i]) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 }
